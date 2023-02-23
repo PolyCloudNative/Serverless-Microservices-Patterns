@@ -1,12 +1,13 @@
 import boto3
 import simplejson as json
 import logging
+from decimal import Decimal
+
 
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table('Medications')
 
 def lambda_handler(event, context):
-    print('Event payload: ' + json.dumps(int(event['pathParameters']['id'])))
     http_method = event['httpMethod']
     try:
         http_method = event['httpMethod']
@@ -34,12 +35,23 @@ def lambda_handler(event, context):
 
 def create_medication(event, context):
     try:
+        body = json.loads(event['body'])
+        id = body.get('id')
+        name = body.get('name')
+        medication_id = body.get('medication_id')
+        price = Decimal(str(body.get('price')))
+
+        if id is None or name is None or medication_id is None:
+            return {
+                'statusCode': 400,
+                'body': json.dumps('Missing required fields')
+            }
+
         medications = {
-            'id': int(event['pathParameters']['id']),
-            'name': event['name'],
-            'medication_id': event['medication_id'],
-            'compound_id': event['compound_id'],
-            'price': float(event['price'])
+            'id': id,
+            'name': name,
+            'medication_id': medication_id,
+            'price': price
         }
         table.put_item(Item=medications)
         response = {
@@ -53,6 +65,7 @@ def create_medication(event, context):
         }
     
     return response
+
 
 def get_medication(event, context):
     try:
