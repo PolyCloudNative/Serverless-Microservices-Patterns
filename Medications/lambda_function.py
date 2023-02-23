@@ -97,42 +97,55 @@ def get_medication(event, context):
 
 def update_medication(event, context):
     try:
-        id = int(event['pathParameters']['id'])
-        expression_attribute_values = {}
-        update_expression = 'SET'
-        
-        for key in event['body']:
-            if key != 'id':
-                if key == 'price':
-                    expression_attribute_values[':{}'.format(key)] = float(event['body'][key])
-                else:
-                    expression_attribute_values[':{}'.format(key)] = event['body'][key]
-                
-                update_expression += ' #{} = :{},'.format(key, key)
-                expression_attribute_values['#{}'.format(key)] = key
-        
-        update_expression = update_expression[:-1]
-        result = table.update_item(
+        body = {
+            "id": 2,
+            "medication_id": "DB01050",
+            "name": "Ibuprofen",
+            "price": 9.98
+        }
+        id = body.get('id')
+        name = body.get('name')
+        medication_id = body.get('medication_id')
+        price = Decimal(str(body.get('price')))
+
+        if id is None or name is None or medication_id is None:
+            return {
+                'statusCode': 400,
+                'body': json.dumps('Missing required fields')
+            }
+
+        medications = {
+            'id': id,
+            'name': name,
+            'medication_id': medication_id,
+            'price': price
+        }
+        table.update_item(
             Key={'id': id},
-            UpdateExpression=update_expression,
-            ExpressionAttributeValues=expression_attribute_values,
-            ReturnValues='ALL_NEW'
+            UpdateExpression='SET #n = :val1, medication_id = :val2, price = :val3',
+            ExpressionAttributeNames={'#n': 'name'},
+            ExpressionAttributeValues={
+                ':val1': name,
+                ':val2': medication_id,
+                ':val3': price
+            }
         )
         response = {
             'statusCode': 200,
-            'body': json.dumps(result['Attributes'])
+            'body': json.dumps('Medication updated successfully')
         }
     except Exception as e:
         response = {
             'statusCode': 500,
             'body': json.dumps('Error updating medication: {}'.format(str(e)))
         }
-    
+
     return response
+
 
 def delete_medication(event, context):
     try:
-        id = event['pathParameters']['id']
+        id = int(event['pathParameters']['id'])
         table.delete_item(Key={'id': id})
         response = {
             'statusCode': 200,
