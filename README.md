@@ -35,6 +35,13 @@ There are several common serverless microservices design patterns that you can u
 - Strangler Pattern
 - State Machine Pattern
 - Router Pattern
+- Robust API pattern
+- Frugal Consumer Pattern
+- Read Heavy Reporting Engine Pattern
+- Fan-Out/Fan-In Pattern
+- Eventually Consistent Pattern
+- Distributed Trigger Pattern
+- Circuit Breaker Pattern
 
 Event-driven architecture: In this pattern, services communicate with each other by sending and receiving events. This can be useful for building highly scalable applications.
 
