@@ -25,7 +25,7 @@ There are several common serverless microservices design patterns that you can u
 - [Serverless Microservices Simple Service Pattern - AWS](https://github.com/PolyCloudNative/Serverless-Microservices-Patterns/tree/main/Serverless-Microservices-Simple-Service-Pattern)
 
 - The Scalable Webhook pattern
-- The GateKeeper Pattern
+- [The GateKeeper Pattern - AWS](https://github.com/PolyCloudNative/Serverless-Microservices-Patterns/tree/main/Serverless-Microservices-Gatekeeper-Pattern)
 - Internal API
 - Internal Handoff
 - Aggregator Pattern
