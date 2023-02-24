@@ -33,6 +33,18 @@ Add API resources and methods: Once you have created the API, you need to add re
 aws apigateway create-resource --rest-api-id YOUR_API_ID --parent-id YOUR_PARENT_RESOURCE_ID --path-part medications
 ```
 
+Configure the authorizer for the API Gateway: You need to configure the API Gateway to use the Lambda authorizer function for authenticating and authorizing incoming requests. Here's an example command to add an authorizer to a method:
+
+```
+aws apigateway update-method --rest-api-id YOUR_API_ID --resource-id YOUR_RESOURCE_ID --http-method GET --authorization-type CUSTOM --authorizer-id YOUR_AUTHORIZER_FUNCTION_ARN
+```
+
+Update the method integration: After configuring the authorizer, you need to update the method integration to route requests to the Lambda function. Here's an example command to update a method integration:
+
+```
+aws apigateway put-integration --rest-api-id YOUR_API_ID --resource-id YOUR_RESOURCE_ID --http-method GET --type AWS_PROXY --integration-http-method POST --uri arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/YOUR_LAMBDA_FUNCTION_ARN/invocations --credentials YOUR_ROLE_ARN
+```
+
 Deploy the API: Finally, you need to deploy the API to make it accessible to clients. You can do this using the AWS Management Console or the AWS CLI. Here's an example command to deploy the API:
 
 ```
@@ -86,6 +98,29 @@ Note: Replace /medications with the appropriate base URL for your deployed API.
 The above endpoints correspond to the CRUD operations performed by the Lambda function in the code you provided.
 
 To test the microservice, you can use a tool like Postman to make HTTP requests to the API Gateway. When you make a request to the API, the API Gateway will route the request to the appropriate Lambda function, which will execute the corresponding CRUD operation on the DynamoDB table.
-Conclusion
+
+To add the authorizationToken header to your requests in Postman, you can follow these steps:
+
+    Open Postman and navigate to the request you want to add the header to.
+
+    Click on the "Headers" tab below the request URL field.
+
+    Click on the "Add Header" button.
+
+    Enter "authorizationToken" as the header key.
+
+    Enter "xxxxxxxxxx" as the header value. [Modify this value in the lambda function]
+
+    Leave the "description" field blank.
+
+    Set the "type" field to "text".
+
+    Make sure the "enabled" checkbox is checked.
+
+    Click the "Save" button to save the header.
+
+Once you've added the header to your request, you should be able to successfully authenticate with the Lambda authorizer function.
+
+## Conclusion
 
 That's it! You now have a fully functional serverless microservice for managing medication data. With this architecture, you can easily scale your application as your user base grows, without having to worry about managing and scaling the underlying infrastructure.
