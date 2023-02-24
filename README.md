@@ -26,6 +26,15 @@ There are several common serverless microservices design patterns that you can u
 
 - The Scalable Webhook pattern
 - The GateKeeper Pattern
+- Internal API
+- Internal Handoff
+- Aggregator Pattern
+- Notifier Pattern
+- FIFO Pattern
+- Streamer Pattern
+- Strangler Pattern
+- State Machine Pattern
+- Router Pattern
 
 Event-driven architecture: In this pattern, services communicate with each other by sending and receiving events. This can be useful for building highly scalable applications.
 
