@@ -39,7 +39,7 @@ There are several common serverless microservices design patterns that you can u
 - Frugal Consumer Pattern
 - Read Heavy Reporting Engine Pattern
 - Fan-Out/Fan-In Pattern
-- Eventually Consistent Pattern
+- [The Eventual Consistent Pattern - AWS](https://github.com/PolyCloudNative/Serverless-Microservices-Patterns/tree/main/Serverless-Microservices-Eventual-Consistency-Pattern)
 - Distributed Trigger Pattern
 - Circuit Breaker Pattern
 
