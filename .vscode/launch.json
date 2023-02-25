@@ -3,6 +3,21 @@
     {
       "type": "aws-sam",
       "request": "direct-invoke",
+      "name": "MedChg:lambda_function.lambda_handler (python3.9)",
+      "invokeTarget": {
+        "target": "code",
+        "projectRoot": "${workspaceFolder}/Serverless-Microservices-Eventual-Consistency-Pattern/MedChg",
+        "lambdaHandler": "lambda_function.lambda_handler"
+      },
+      "lambda": {
+        "runtime": "python3.9",
+        "payload": {},
+        "environmentVariables": {}
+      }
+    },
+    {
+      "type": "aws-sam",
+      "request": "direct-invoke",
       "name": "MedsAuth:lambda_function.lambda_handler (python3.9)",
       "invokeTarget": {
         "target": "code",
